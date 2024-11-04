@@ -37,34 +37,34 @@ func main() {
 		switch str[0] {
 		case "/add":
 			if len(str) <= 1 {
-				fmt.Println("input zero count")
+				fmt.Println("input zero count to add")
 				break
 			}
 			count, err := strconv.Atoi(str[1])
 			if err != nil {
-				fmt.Printf("ivalid count of workers: %v", err)
+				fmt.Println("invalid count of workers to add")
 				break
 			}
 			err = wp.ChangeWorkersLimit(count)
 			if errors.Is(err, wpool.ErrInvalidDelta) {
-				fmt.Printf("invalid %d", count)
+				fmt.Printf("invalid delta %d\n", count)
 				break
 			} else {
 				fmt.Printf("Limit has set to %d\n", wp.GetWorkersLimit())
 			}
 		case "/remove":
 			if len(str) <= 1 {
-				fmt.Println("input zero count")
+				fmt.Println("input zero count to remove")
 				break
 			}
 			count, err := strconv.Atoi(str[1])
 			if err != nil {
-				fmt.Printf("ivalid count of workers: %v", err)
+				fmt.Println("invalid count of workers to delete")
 				break
 			}
 			err = wp.ChangeWorkersLimit(-count)
 			if errors.Is(err, wpool.ErrInvalidDelta) {
-				fmt.Printf("invalid %d", count)
+				fmt.Printf("invalid delta %d\n", count)
 				break
 			} else {
 				fmt.Printf("Limit has set to %d\n", wp.GetWorkersLimit())
@@ -78,6 +78,7 @@ func main() {
 				fmt.Println("input zero jobs")
 				break
 			}
+
 			for _, job := range str[1:] {
 				for _, payload := range strings.Split(job, *separate) {
 					wp.AddPayloadItem(payload)
