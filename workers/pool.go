@@ -43,6 +43,8 @@ func (wp *WorkerPool) Run() {
 
 		wp.limiter <- struct{}{}
 
+		// Используем функцию для абстракции, чтобы сам работник
+		// ничего не знал о канале
 		go do(uuid.New(), payloadItem, func() {
 			<-wp.limiter
 		})
