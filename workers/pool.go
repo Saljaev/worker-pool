@@ -41,13 +41,16 @@ func (wp *WorkerPool) Run() {
 	for {
 		payloadItem := <-wp.payload
 
-		wp.limiter <- struct{}{}
+		if cap(wp.limiter) > 0 {
+			wp.limiter <- struct{}{}
 
-		// Используем функцию для абстракции, чтобы сам работник
-		// ничего не знал о канале
-		go do(uuid.New(), payloadItem, func() {
-			<-wp.limiter
-		})
+			// Используем функцию для абстракции, чтобы сам работник
+			// ничего не знал о канале
+			go do(uuid.New(), payloadItem, func() {
+				<-wp.limiter
+			})
+		}
+
 	}
 }
 
