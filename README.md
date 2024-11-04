@@ -48,8 +48,8 @@ ___
 
 ___
 ### Пример использования
-![work-pool.gif](images/work-pool.gif)
 
+![work-pool.gif](images/work-pool.gif)  
 ___
 ### Структура проекта
 ```
